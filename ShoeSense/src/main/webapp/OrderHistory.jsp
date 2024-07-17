@@ -301,23 +301,23 @@
         %>
         <div class="order mb-4 fs-5">
             <div class="order-body">
-                <h5 class="card-body">ID: <%= i.getOrderID()%></h5>
-                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StatusLog<%= i.getOrderID()%>">Product Details</a>
+                <h5 class="card-body">ID: <%= i.getOrderID()%></h5>         
                 <%
                     for (OrderStatusLog osl : osll) {
                         if (osl.getOrderStatus().equals("Processing")) {
                 %>
-                <p class="card-text">Order Date: <%= osl.getStatusDate()%></p>
+                <p style="display: inline" class="card-text">Order Date: <%= osl.getStatusDate()%></p>
+                <a style="display: inline; margin-left: 600px;"class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StatusLog<%= i.getOrderID()%>">Product Details</a>
                 <%
                         }
                     }
                 %>
-                <p>Order Status: <span class="text-success fw-bold"><%= i.getOrderStatus()%></span></p>
-                <p>Payment Method: <span class="text-success fw-bold"><%= i.getPaymentMethod()%></span></p>
+                <p style="margin-top: 1rem">Order Status: <span class="text-success fw-bold"><%= i.getOrderStatus()%></span></p>
+                <p style="display:inline">Payment Method: <span class="text-success fw-bold"><%= i.getPaymentMethod()%></span></p>
                 <%
                     if ("Processing".equalsIgnoreCase(i.getOrderStatus())) {
                 %>
-                <form action="" method="post">
+                <form action="" method="post" style="display:inline; margin-left: 730px;">
                     <input type="hidden" name="orderID" value="<%= i.getOrderID()%>">
                     <input type="hidden" name="userID" value="<%=session.getAttribute("id")%>">
                     <button type="submit" name="CancelOrder" class="btn btn-danger">Cancel Order</button>
@@ -354,7 +354,7 @@
                             <p>Quantity: <%= j.getQuantity()%></p>
                         </div>
                         <div class="col-md-2">
-                            <p>Price of products: <%= j.getTotal()%></p>
+                            <p>Price of products: <fmt:formatNumber value="<%= j.getTotal()%>" type="number" pattern="###,### " />VNÐ </p>
                         </div>
                    <%     
                                         if("Delivered".equalsIgnoreCase(i.getOrderStatus())) {
@@ -376,8 +376,8 @@
                     }
                 %>
                 <div class="row justify-content-end">
-                    <div class="col-md-2">
-                        <p class="card-text">Total: <fmt:formatNumber value="<%= i.getTotalPrice()%>" type="number" pattern="###,### vnđ" /></p>
+                    <div style="text-align: end">
+                        <p class="card-text">Total: <fmt:formatNumber value="<%= i.getTotalPrice()%>" type="number" pattern="###,### " />VNÐ</p>
                     </div>
                 </div>
             </div>

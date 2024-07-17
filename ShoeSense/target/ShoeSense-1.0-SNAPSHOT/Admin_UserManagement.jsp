@@ -13,8 +13,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
- <title>Customer Management</title>
+        <title>Customer Management</title>
         <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -118,102 +119,99 @@
 
         </style>
     </head>
-    
-               <%
 
-            Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
+    <%
 
-            
-            if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
-                boolean flag = false;
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("account") && !cookie.getValue().equals("")) {
-                            session.setAttribute("id", cookie.getValue());
-                            flag = true;
-                            break;
-                        }
+        Cookie[] cookies = request.getCookies();
+
+        Account temp = null;
+
+        if (session.getAttribute("acc") != null) {
+            temp = (Account) session.getAttribute("acc");
+            boolean flag = false;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("account") && !cookie.getValue().equals("")) {
+                        session.setAttribute("id", cookie.getValue());
+                        flag = true;
+                        break;
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+            }
+
+            if (!temp.getAccountRole().equals("Admin")) {
+                if (temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/");
+                }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
             }
-                
-                if (!flag) {
-                    response.sendRedirect("/ShoeSense/login");
-                }
-            } else {
-            
-                boolean flag = false;
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("account") && !cookie.getValue().equals("")) {
-                            session.setAttribute("id", cookie.getValue());
-                            AccountDAO adao = new AccountDAO();
-                            temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
-                            flag = true;
-                            break;
-                        }
+
+            if (!flag) {
+                response.sendRedirect("/ShoeSense/login");
+            }
+        } else {
+
+            boolean flag = false;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("account") && !cookie.getValue().equals("")) {
+                        session.setAttribute("id", cookie.getValue());
+                        AccountDAO adao = new AccountDAO();
+                        temp = (Account) adao.GetAccountById(cookie.getValue());
+
+                        flag = true;
+                        break;
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+            }
+
+            if (!temp.getAccountRole().equals("Admin")) {
+                if (temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/");
+                }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
             }
-                
-                if (!flag) {
-                    response.sendRedirect("/ShoeSense/Login");
-                }
+
+            if (!flag) {
+                response.sendRedirect("/ShoeSense/Login");
             }
+        }
 
-      
 
-        %>
-    
+    %>
+
     <body class="allbody">
 
         <a href="" class="navbar ps-5"> ShoeSense - ADMIN</a>
         <div class="main-body">
-  <jsp:include page="Header_Admin.jsp"></jsp:include>
-            <div class="container">
-                <div class="content">
-                    <h1>Customer Management</h1>
-                    <table id="example">
-                        <thead>
-                            <tr>
-                                <th class="align-middle">NO</th>
-                                <th class="align-middle">User ID</th>
-                                <th class="align-middle">User Name</th>
-                                <th class="align-middle">Gender</th>
-                                <th class="align-middle">Email</th>
-                                <th class="align-middle">Date of birth</th>
-                                <th class="align-middle">Phone number</th>
-                                <th class="align-middle">Address</th>
-                                <th class="align-middle">Status</th>
-                                <th class="align-middle"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+                <div class="container">
+                    <div class="content">
+                        <h1>Customer Management</h1>
+                        <table id="example">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle">NO</th>
+                                    <th class="align-middle">User ID</th>
+                                    <th class="align-middle">User Name</th>
+                                    <th class="align-middle">Gender</th>
+                                    <th class="align-middle">Email</th>
+                                    <th class="align-middle">Date of birth</th>
+                                    <th class="align-middle">Phone number</th>
+                                    <th class="align-middle">Address</th>
+                                    <th class="align-middle">Status</th>
+                                    <th class="align-middle"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             <c:set var="stt" value="0" />
                             <c:forEach items="${listUser}" var="o">
                                 <c:set var="stt" value="${stt + 1}" />
-                                    <c:set var="account" value="${o}" scope="request" />
+                                <c:set var="account" value="${o}" scope="request" />
                                 <tr>
                                     <td class="align-middle"><p>${stt}</p></td>
                                     <td class="align-middle"><p>${o.accountID}</p></td>
@@ -227,18 +225,17 @@
                                     <td class="align-middle">
                                         <a href="/ShoeSense/admin/user/manage/detail/order/${o.accountID}" class="btn btn-primary text-white m-2" >Order Detail</a>
                                         <a href="/ShoeSense/admin/user/manage/detail/comment/${o.accountID}" class="btn btn-primary text-white m-2" >Comment Detail</a>
-                                            <%
-                                            Account temp1 = (Account) request.getAttribute("account");
-                                            
+                                        <%                                                Account temp1 = (Account) request.getAttribute("account");
+
                                             if ("Active".equals(temp1.getAccountStatus())) {
-                                            %>
+                                        %>
                                         <a href="/ShoeSense/admin/user/manage/status/ban/${o.accountID}" onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này không?')" class="btn btn-danger text-white m-2" name="delete" >Ban</a>
                                         <%
                                         } else {
                                         %>
                                         <a href="/ShoeSense/admin/user/manage/status/unban/${o.accountID}" onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này không?')" class="btn btn-danger text-white m-2" name="delete" >Unbanned</a>
                                         <%
-                                        } 
+                                            }
                                         %>
                                     </td>
                                 </tr>
@@ -252,9 +249,9 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $("#example").DataTable();
-            });
+                                            $(document).ready(function () {
+                                                $("#example").DataTable();
+                                            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script

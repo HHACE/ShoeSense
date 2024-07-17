@@ -23,7 +23,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css" />
         <style>
@@ -144,25 +144,42 @@
                 text-decoration: none;
                 color: white;
             }
-            
-             .hethang{
-            position: absolute;
+
+            .hethang{
+                position: absolute;
+            }
+            .banner-img {
+                height: 500px; /* adjust the height value to your desired value */
+                object-fit: cover;
+                width: 100%;
+            }
+            .nav-links {
+                text-align: center;
+                margin: 20px auto;
             }
 
+            .nav-links a {
+                text-decoration: none;
+                color: #333;
+                margin: 0 50px;
+                transition: color 0.2s ease;
+            }
+
+            .nav-links a:hover {
+                color: #FF0000; /* red */
+            }
         </style>
     </head>
     <body>
-        
-                <%
+
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = (Account) session.getAttribute("acc");
-            
 
-            
+            Account temp = (Account) session.getAttribute("acc");
+
             if (session.getAttribute("acc") != null) {
-            temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -173,11 +190,11 @@
                         }
                     }
                 }
-                
-                            if (temp != null && !temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/admin/finance");
-            }
-                
+
+                if (temp != null && !temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/admin/finance");
+                }
+
 //                if (!flag) {
 //                    response.sendRedirect("/ShoeSense/login");
 //                }
@@ -187,176 +204,175 @@
                     for (Cookie cookie : cookies) {
                         if (cookie.getName().equals("account") && !cookie.getValue().equals("")) {
                             session.setAttribute("id", cookie.getValue());
-                                                        AccountDAO adao = new AccountDAO();
+                            AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
                             flag = true;
                             break;
                         }
                     }
                 }
-   
-                            if (temp != null && !temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/admin/finance");
-            }
-                
-                
+
+                if (temp != null && !temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/admin/finance");
+                }
+
 //                if (!flag) {
 //                    response.sendRedirect("/ShoeSense/Login");
 //                }
             }
 
-     
 
         %>
-        
-        <jsp:include page="Header_User.jsp"></jsp:include>
-  <div class="bg-body-secondary">
 
-            <div id="carouselExampleDark" class="carousel carousel-dark slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                </div>
-                <!--Banner-->
-                <div id="banner">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                            <img id="bannerimg" src="/ShoeSense/img/banner/abanner1.jpg" class="d-block w-100" alt="banner1">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                            <img id="bannerimg" src="/ShoeSense/img/banner/abanner2.jpg" class="d-block w-100" alt="banner2">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img id="bannerimg" src="/ShoeSense/img/banner/abanner3.jpg" class="d-block w-100" alt="banner3">
-                            <div class="carousel-caption d-none d-md-block">
-                            </div>
-                        </div>
+        <jsp:include page="Header_User.jsp"></jsp:include>
+            <div class="bg-body-secondary">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                                aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-5 mb-5">
-            <form action="?search=${param['search']}&sort=${param['sort']}&category=${param['category']}" method="get">
-                <section class="bg-white p-5 p">
-                    <div class="row m-2">
-                        <a href="?search=${param['search']}&sort=${param['sort']}&category='Shoe'" class="col-4 text-center p-3 category">Shoe</a>
-                        <a href="?search=${param['search']}&sort=${param['sort']}&category='Sandal'" class="col-4 text-center p-3 category">Sandal</a>
-                        <a href="?search=${param['search']}&sort=${param['sort']}&category='Boot'" class="col-4 text-center p-3 category">Boot</a>
-                         <a href="?search=${param['search']}&sort=${param['sort']}&category='Heel'" class="col-4 text-center p-3 category">Heel</a>
-                    </div>
-                    <div id="sort" class="row">
-                        <div class="col-3">
-                            <div class="form-floating row">
-                                <div class="col-6">
-                                    <div class="form-floating row">
-                                        <select class="form-select form-select-sm" id="floatingSelectGrid" name="sort" onchange="this.form.submit()">
-                                            <option selected value="0" ${param['sort'] == 0 ? "selected" : ""}>option</option>
-                                            <option value="1" ${param['sort'] == 1 ? "selected" : ""}>By Name A-Z</option>
-                                            <option value="2" ${param['sort'] == 2 ? "selected" : ""}>By Price (High - Low)</option>
-                                            <option value="3" ${param['sort'] == 3 ? "selected" : ""}>By Price (Low - High)</option>
-                                        </select>
-                                        <label for="floatingSelectGrid">Sort</label>
-                                    </div>
+                    <!--Banner-->
+                    <div id="banner">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" data-bs-interval="10000">
+                                <img id="bannerimg" src="/ShoeSense/img/banner/abanner1.jpg" class="d-block w-100 banner-img" alt="banner1">
+                                <div class="carousel-caption d-none d-md-block">
+                                </div>
+                            </div>
+                            <div class="carousel-item" data-bs-interval="2000">
+                                <img id="bannerimg" src="/ShoeSense/img/banner/abanner2.jpg" class="d-block w-100 banner-img" alt="banner2">
+                                <div class="carousel-caption d-none d-md-block">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img id="bannerimg" src="/ShoeSense/img/banner/abanner3.jpg" class="d-block w-100 banner-img" alt="banner3">
+                                <div class="carousel-caption d-none d-md-block">
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="category" value="${param['category']}">
-
-                        <div class="row">
- <c:forEach var="o" items="${plist}">
-    <c:if test="${o.productStatus == 'Public'}">
-        <a id="product" href="/ShoeSense/product/detail/${o.productID}" class="m-5 col-sm-12 col-md-4 col-lg-2" style="text-decoration: none">
-            <div class="card h-100" style="width: 13rem;">
-                <img src="/ShoeSense/${o.productImg}" class="card-img " alt="product1">
-                <div class="card-body">
-                    <h5 class="card-title">${o.productName}</h5>
-                    <p class="card-text">
-                        <span class="fw-bold rounded-2 text-white bg-danger p-1">Giá tiền:</span>
-                        <fmt:formatNumber pattern="###,###" value="${o.productPrice}"/> vnđ
-                    </p>
-                    
-                    <c:set var="productId" value="${o.productID}" />
-                    <%-- Retrieve stock information using a DAO method --%>
-                    <%
-                        ProductVariantDAO vardao = new ProductVariantDAO();
-                        int totalVariantQuantity = vardao.getTotalProductVariantByProductId((Integer)pageContext.getAttribute("productId"));
-   
-                        
-                        if (totalVariantQuantity >0){
-                        %>
-                          <p class="card-text">Stock: <%= totalVariantQuantity%></p>
-                        <%
-                        } else {
-                    %>
-                     <p class="card-text">Stock: Out Of Stock</p>
-                                            <%
-                        } 
-                    %>
-                    
-                
-                    
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </a>
-    </c:if>
-</c:forEach>
-                        </div>
-                    </div>
-                    <div class="flex-c-m flex-w w-full p-t-45">
-                        <div style="display: flex; justify-content: center;">
-                            <ul class="pagination">
-                                <li class="page-item ${param['index'] == 1 ? 'disabled' : ''}">
-                                    <a class="page-link" href="?index=${param['index'] - 1}&sort=${param['sort']}&category=${param['category']}">Previous</a>
-                                </li>
-                                <c:forEach var="i" begin="1" end="${numberPage}">
-                                    <li class="${param['index'] == i ? 'page-item active' : 'page-item'}">
-                                        <a href="?index=${i}&sort=${param['sort']}&category=${param['category']}" class="page-link">${i}</a>
-                                    </li>
-                                </c:forEach>
-                                <li class="page-item ${param['index'] == numberPage ? 'disabled' : ''}">
-                                    <a class="page-link" href="?index=${param['index'] + 1}&sort=${param['sort']}&category=${param['category']}">Next</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-            </form>
+            <!--            <div class="container mt-5 mb-5">
+                            <form action="?search=${param['search']}&sort=${param['sort']}&category=${param['category']}" method="get">
+                            <section class="bg-white p-5 p">
+                                <div class="row m-2">
+                                    <a href="?search=${param['search']}&sort=${param['sort']}&category='Shoe'" class="col-4 text-center p-3 category">Shoe</a>
+                                    <a href="?search=${param['search']}&sort=${param['sort']}&category='Sandal'" class="col-4 text-center p-3 category">Sandal</a>
+                                    <a href="?search=${param['search']}&sort=${param['sort']}&category='Boot'" class="col-4 text-center p-3 category">Boot</a>
+                                    <a href="?search=${param['search']}&sort=${param['sort']}&category='Heel'" class="col-4 text-center p-3 category">Heel</a>
+                                </div>
+                            </section>
+                        </form>
+                    </div>-->
+        <div class="nav-links">
+            <a href="?search=${param['search']}&sort=${param['sort']}&category='Shoe'">Shoe</a>
+            <a href="?search=${param['search']}&sort=${param['sort']}&category='Sandal'">Sandal</a>
+            <a href="?search=${param['search']}&sort=${param['sort']}&category='Boot'">Boot</a>
+            <a href="?search=${param['search']}&sort=${param['sort']}&category='Heel'">Heel</a>
         </div>
-        <!--Footer-->
-        
-        <jsp:include page="Footer.jsp"></jsp:include>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-        <script src="quantity.js"></script>
-        <%            String alertMess = (String) request.getAttribute("alertMess");
-            if (alertMess != null && !alertMess.isEmpty()) {
-        %>
-        <script>
-                                            alert("<%= alertMess%>");
-        </script>
-        <%
+        <hr>
+        <div id="sort" class="row" style="margin-left: 60px">
+            <div class="col-3">
+                <div class="form-floating row">
+                    <div class="col-6">
+                        <div class="form-floating row">
+                            <select class="form-select form-select-sm" id="floatingSelectGrid" name="sort" onchange="this.form.submit()" style="padding-left: 12px">
+                                <option selected value="0" ${param['sort'] == 0 ? "selected" : ""}>Option</option>
+                                <option value="1" ${param['sort'] == 1 ? "selected" : ""}>By Name A-Z</option>
+                                <option value="2" ${param['sort'] == 2 ? "selected" : ""}>By Price (High - Low)</option>
+                                <option value="3" ${param['sort'] == 3 ? "selected" : ""}>By Price (Low - High)</option>
+                            </select>
+                            <label for="floatingSelectGrid">Sort</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="category" value="${param['category']}">
 
-            }
-        %>
-    </body>
+             <div class="container mt-5">
+        <div class="row">
+            <c:forEach var="o" items="${plist}">
+                <c:if test="${o.productStatus == 'Public'}">
+                    <div class="col-sm-12 col-md-4 col-lg-2 mb-5">
+                       <a href="/ShoeSense/product/detail/${o.productID}" class="text-decoration-none" >
+                            <div class="card h-100">
+                                <img src="/ShoeSense/${o.productImg}" class="card-img-top" alt="${o.productName}">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="font-weight: bold; text-transform: uppercase;" >${o.productName} </h5>
+                                    <p class="card-text">
+                                        <fmt:formatNumber pattern="###,###" value="${o.productPrice}"/>  VNÐ
+                                    </p>
+                                    <c:set var="productId" value="${o.productID}" />
+                                    <%-- Retrieve stock information using a DAO method --%>
+                                    <%
+                                        ProductVariantDAO vardao = new ProductVariantDAO();
+                                        int totalVariantQuantity = vardao.getTotalProductVariantByProductId((Integer) pageContext.getAttribute("productId"));
+                                    %>
+                                    <p class="card-text">Stock: <%= totalVariantQuantity > 0 ? totalVariantQuantity : "Out Of Stock" %></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
+    </div>
+            <div class="flex-c-m flex-w w-full p-t-45">
+                <div style="display: flex; justify-content: center;">
+                    <ul class="pagination">
+                        <li class="page-item ${param['index'] == 1 ? 'disabled' : ''}">
+                            <a class="page-link" href="?index=${param['index'] - 1}&sort=${param['sort']}&category=${param['category']}">Previous</a>
+                        </li>
+                        <c:forEach var="i" begin="1" end="${numberPage}">
+                            <li class="${param['index'] == i ? 'page-item active' : 'page-item'}">
+                                <a href="?index=${i}&sort=${param['sort']}&category=${param['category']}" class="page-link">${i}</a>
+                            </li>
+                        </c:forEach>
+                        <li class="page-item ${param['index'] == numberPage ? 'disabled' : ''}">
+                            <a class="page-link" href="?index=${param['index'] + 1}&sort=${param['sort']}&category=${param['category']}">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>
+<!--Footer-->
+
+<jsp:include page="Footer.jsp"></jsp:include>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+    <script src="quantity.js"></script>
+<%            String alertMess = (String) request.getAttribute("alertMess");
+    if (alertMess != null && !alertMess.isEmpty()) {
+%>
+<script>
+                                alert("<%= alertMess%>");
+</script>
+<%
+
+    }
+%>
+ <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>

@@ -1,99 +1,142 @@
-<%-- 
-    Document   : Footer
-    Created on : Jun 10, 2024, 9:59:14 AM
-    Author     : ADMIN
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <!--Footer-->
-        <footer class="footer bg-dark">
-            <div class="container">
-                <div class="row">
-                    <!--About F-Store-->
-                    <div class="col-lg-5 col-sm-4 card bg-dark border-0" style="color: white;">
-                        <div class="card-body pt-5 pb-5">
-                            <h5 class="card-title">Về ShoeSense <br>
-                                <span>Original and cheap</span>
-                            </h5>
-                            <p class="card-text"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"
-                                                      style="fill: #ffffff;">
-                                <path
-                                    d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                                </svg>
-                                Số 203, Trần Hưng Đạo, phường 10, quận 5, TP.HCM.
-                            </p>
-                            <p class="card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-                                     style="fill: #ffffff;">
-                                <path
-                                    d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-                                </svg>
-                                0708330289
-                            </p>
-                            <p class="card-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"
-                                     style="fill: #ffffff;">
-                                <path
-                                    d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
-                                </svg>
-                                fstore@gmail.com
-                            </p>
-                        </div>
-                    </div>
-                    <!--Liên kết-->
-                    <div class="col-lg-4 col-sm-2 bg-dark border-0" style="color: white;">
-                        <div class="card-body pt-5 pb-5">
-                            <h5 class="card-title">Liên kết
-                            </h5>
-                            <ul class="card-text">
-                                <li>
-                                    <a href="#" id="linkfooter">Trang chủ</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">Sản phẩm</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">Phụ kiện</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">Thương hiệu</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">Giới thiệu</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">F-Store OUTLET</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--Chính sách-->
-                    <div class="col-lg-3 col-sm-3 card bg-dark border-0" style="color: white;">
-                        <div class="card-body pt-5 pb-5">
-                            <h5 class="card-title">Chính sách
-                            </h5>
-                            <ul class="card-text">
-                                <li>
-                                    <a href="#" id="linkfooter">Sản phẩm bestseller</a>
-                                </li>
-                                <li>
-                                    <a href="#" id="linkfooter">Sản phẩm khuyến mãi</a>
-                                </li>
-                            </ul>
-                        </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSP Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Custom styles */
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 30px 0;
+        }
+
+        .footer-content {
+            margin-bottom: 30px;
+        }
+
+        .footer-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .footer-content p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        .footer-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-content ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-content ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .social-icons li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .social-icons li a {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        .social-icons li a:hover {
+            color: #007bff;
+        }
+
+        /* Responsive iframe */
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+    </style>
+</head>
+<body>
+<!--Footer-->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Contact Us</h3>
+                    <p>Email: info@example.com</p>
+                    <p>Phone: +121 56556 565556</p>
+                    <p>Address: Your Address 123 street</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Quick Links</h3>
+                    <ul class="list">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Follow Us</h3>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Location</h3>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15743722.79496086!2d95.23367880582101!3d15.555151669615718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31157a4d736a1e5f%3A0xb03bb0c9e2fe62be!2zVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1720428710482!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
-        </footer>
-    </body>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-pdkgJmtCEkqaS8tE7/QKpv5A+bfrbpvO3+GZwFpd9Q63V5UFS1Flp7YppIWaG0kA"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-SyXFXqKfBwKpWagTiuZG3zISe8dAqBZmfBG8s4SD9s6s2JBqoM0lF25a6JC7tlJA"
+        crossorigin="anonymous"></script>
+</body>
 </html>

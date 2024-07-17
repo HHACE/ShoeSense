@@ -28,7 +28,7 @@
         <!--                <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
         <title>JSP Page</title>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -282,68 +282,67 @@
 
 
         %>
-         
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
-                <div class="body">
-                    <div id="manageproduct" class="manageproduct">
+
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
+            <div class="body">
+                <div id="manageproduct" class="manageproduct">
 
 
-                        <h2>Order data</h2>
+                    <h2>Order data</h2>
 
 
-                        <div>
-                            <p>Status:
-                                <a href="/ShoeSense/order/manage/processing"  class="btn btn-secondary" >Processing</a>
-                                <a href="/ShoeSense/order/manage/shipping"  class="btn btn-secondary" >Shipping</a>
-                                <a href="/ShoeSense/order/manage/cancel"  class="btn btn-secondary" >Cancel</a>
-                                <a href="/ShoeSense/order/manage/delivered"  class="btn btn-secondary" >Delivered</a>
-                            </p>
+                    <div>
+                        <p>Status:
+                            <a href="/ShoeSense/order/manage/processing"  class="btn btn-secondary" >Processing</a>
+                            <a href="/ShoeSense/order/manage/shipping"  class="btn btn-secondary" >Shipping</a>
+                            <a href="/ShoeSense/order/manage/cancel"  class="btn btn-secondary" >Cancel</a>
+                            <a href="/ShoeSense/order/manage/delivered"  class="btn btn-secondary" >Delivered</a>
+                        </p>
 
-                        </div>
+                    </div>
 
-                        <table id="example">
-                            <thead>
-                                <tr>
-                                    <th class="align-middle">Order ID</th>
-                                    <th class="align-middle">Account</th>
-                                    <th class="align-middle">Address</th>
-                                    <th class="align-middle">Phone</th>
-                                    
-                                    <th class="align-middle">Total</th>
-                                    <th class="align-middle">Purchase Method</th>
-                                    <th class="align-middle">Purchase Date</th>
-                                    <th class="align-middle">Status</th>
-                                    <th class="align-middle">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <table id="example">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Order ID</th>
+                                <th class="align-middle">Account</th>
+                                <th class="align-middle">Address</th>
+                                <th class="align-middle">Phone</th>
+
+                                <th class="align-middle">Total</th>
+                                <th class="align-middle">Purchase Method</th>
+                                <th class="align-middle">Purchase Date</th>
+                                <th class="align-middle">Status</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <%                                OrderDAO odao = new OrderDAO();
                                 AccountDAO adao2 = new AccountDAO();
                                 OrderStatusLogDAO osldao = new OrderStatusLogDAO();
@@ -369,12 +368,12 @@
                                     </p>
                                 </td>
                                 <td class="align-middle"><p><%= i.getPaymentMethod()%></p></td>
-                                <%
-                                    for (OrderStatusLog osl : osll) {
-                                        if (osl.getOrderStatus().equals("Processing")) {
+                                        <%
+                                            for (OrderStatusLog osl : osll) {
+                                                if (osl.getOrderStatus().equals("Processing")) {
 
 
-                                %>
+                                        %>
                                 <td class="align-middle"><p><%= osl.getStatusDate()%></p></td>
 
                                 <%
@@ -453,7 +452,7 @@
                                                     <form action="" method="post">
                                                         <input type="hidden" name="orderID" value="<%= i.getOrderID()%>">
                                                         <input type="hidden" name="userID" value="<%= i.getAccountID()%>">
-                                                         <input type="hidden" name="staffID" value="<%= temp.getAccountID()%>">
+                                                        <input type="hidden" name="staffID" value="<%= temp.getAccountID()%>">
 
 
                                                         <%

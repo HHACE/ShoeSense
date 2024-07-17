@@ -21,12 +21,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
         <style>
-
+            body{
+               background: url("<%= request.getContextPath() %>/img/nen.jpg");
+                background-position: center;
+                background-size: cover;
+            } 
+            
             #linkfooter{
                 text-decoration: none;
                 color: white;
@@ -82,18 +86,16 @@
         </style>
     </head><!-- comment -->
 
-    
+
     <body>
-      <%
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
 
-            
+            Account temp = null;
+
             if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -104,16 +106,16 @@
                         }
                     }
                 }
-                
-                            if (temp != null && !temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/admin/finance");
-            }
-                
+
+                if (temp != null && !temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/admin/finance");
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             } else {
-            
+
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -121,41 +123,39 @@
                             session.setAttribute("id", cookie.getValue());
                             AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
+
                             flag = true;
                             break;
                         }
                     }
                 }
-                
-                            if (temp != null && !temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/admin/finance");
-            }
-                
+
+                if (temp != null && !temp.getAccountRole().equals("User")) {
+                    response.sendRedirect("/ShoeSense/admin/finance");
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             }
 
-   
 
         %>
-        
-        <jsp:include page="Header_User.jsp"></jsp:include>
-         <!--Body home page-->
-        <div class="bg-body-secondary">
-            <div id="carouselExampleDark" class="carousel carousel-dark slide">
-                <div class="container pt-5">
 
-                    <h1>Your Cart</h1>
-                    <div class="row">
-                        <!-- Cart items go here -->
-                        <%
-                            Account u = (Account) session.getAttribute("userIn4");
+        <jsp:include page="Header_User.jsp"></jsp:include>
+            <!--Body home page-->
+            <div class="bg-body-secondary">
+                <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                    <div class="container pt-5">
+
+                        <h1>Your Cart</h1>
+                        <div class="row">
+                            <!-- Cart items go here -->
+                        <%                            Account u = (Account) session.getAttribute("userIn4");
 
                             ProductDAO pdao = new ProductDAO();
                             ProductVariantDAO vardao = new ProductVariantDAO();
-                            
+
                             List<Cart> cart = (List<Cart>) request.getAttribute("mycartlist");
                             if (cart.size() > 0) {
                                 for (Cart i : cart) {
@@ -172,54 +172,38 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body row" style="font-size: 0.8em;"> <!-- Giảm kích thước font xuống 80% -->
-                                                <div class="col-lg-2">
-                                                    <h5 class="card-title" style="font-size: 2em;"> <%= pro.getProductName()%> </h5> <!-- Giữ kích thước tiêu đề tương đối lớn hơn một chút -->
-                                                    <p class="card-text  fs-6 mt-3"><span class="bg-danger text-white p-1 rounded-3">Price:</span> <fmt:formatNumber pattern="###,###" value="<%= pro.getProductPrice()%>"/> vnđ</p>
+                                                <div class="col-lg-2 fs-5">
+                                                    <label>ProductDetail</label> 
+                                                    <h5 class="card-title" style="font-size: 1em; margin-top: 3px"> <%= pro.getProductName()%> </h5> <!-- Giữ kích thước tiêu đề tương đối lớn hơn một chút -->
+                                                    <p class="card-text  fs-6 mt-3"><fmt:formatNumber pattern="###,###" value="<%= pro.getProductPrice()%>"/> VNÐ</p>
                                                 </div>
 
                                                 <div class="col-lg-2 fs-5">
-                                                    <label for="Size">Size:</label>
-                                               
-                                                        
-                                                        <p value="<%=var.getVariantID()%>">  <%= var.getVariantSize() %></p>
-
+                                                    <label for="Size">Size</label>                 
+                                                    <p value="<%=var.getVariantID()%>">  <%= var.getVariantSize()%></p>
                                                     </select></div>
-                                                        
-                                                        
-                                                                                         <div class="col-lg-3 fs-5">
-                                                    <label for="variant">Color:</label>
-                 
-                                                        
-                                                        <p value="<%=var.getVariantID()%>">  <%= var.getVariantColor()%></p>
-
+                                                <div class="col-lg-3 fs-5">
+                                                    <label for="variant">Color</label>
+                                                    <p value="<%=var.getVariantID()%>">  <%= var.getVariantColor()%></p>
                                                     </select></div>
-
-                                            
-
-                                                <div class="col-lg-2 fs-5"><label for="quantity">Quantity:</label>
+                                                <div class="col-lg-2 fs-5"><label for="quantity">Quantity</label>
                                                     <div class="input-group" style="width: 70px ">
                                                         <input type="number" class="form-control text-center rounded-3" id="quantity" min="1" name="quantity" value="<%= i.getQuantity()%>">
                                                     </div></div>
-
                                                 <div class="col-lg-2 fs-5">
-
                                                     <%
                                                         double price = i.getQuantity() * pro.getProductPrice();
                                                     %>
-
-                                                    <label>Total:</label>
+                                                    <label>Total</label>
                                                     <br/>
-                                                    <td class="align-middle"><fmt:formatNumber pattern="###,###" value="<%= price%>"/> vnđ</td>
+                                                    <td class="align-middle"><fmt:formatNumber pattern="###,###" value="<%= price%>"/> VNÐ</td>
                                                     <input type="hidden" name="productID" value="<%= i.getProductID()%>">
                                                     <input type="hidden" name="variantID" value="<%= i.getVariantID()%>">
                                                     <input type="hidden" name="cartID" value="<%= i.getCartID()%>">
                                                     <input type="hidden" name="userID" value="<%= i.getUserID()%>">
-
                                                 </div>
                                                 <!-- Size selection -->
                                                 <!-- Quantity selection -->
-
-
                                             </div>
                                         </div>
                                         <div class="col-md-1">
@@ -228,7 +212,6 @@
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                             <button class="btn btn-secondary ms-3 mb-5 mt-2" name="editCartbtn" value="edit">  <i class="fas fa-edit"></i></button>
-
                                         </div>
                                     </div>
                                 </form>
@@ -240,7 +223,7 @@
                         %>
                         <div class="container" align="center">
                             <h2>Cart is empty</h2>
-                            <p class="fs-4">Go to <a href="/ShoeSense/home">Home page</a> to look for product.</p>
+                            <p class="fs-4">Go to <a href="/ShoeSense">Home page</a> to look for product.</p>
                         </div>
                         <%                            }
                         %>
@@ -263,7 +246,7 @@
                             Product pro = pdao.getProductById(j.getProductID());
                             totalall += j.getQuantity() * pro.getProductPrice();
                         }
-                        if(cart.size()>0){
+                        if (cart.size() > 0) {
                     %>
                     <div class="row">
                         <div class="col-12 text-end">
@@ -276,7 +259,7 @@
                             <!-- ... (mã HTML của trang cart.jsp) ... -->
 
                             <div class="row">
-                         
+
                                 <div class="col-12 text-end mb-5">
                                     <button class="btn btn-primary" >Checkout</button>
                                 </div>
@@ -285,22 +268,22 @@
                             <!-- ... (mã HTML của trang cart.jsp) ... -->
                         </form>
                     </div>
-                                <%
-                                    }
-                                %>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
             <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>-->      
         </div>
-        
-        
-        
-        
+
+
+
+
         <jsp:include page="Footer.jsp"></jsp:include>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-                   integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-        <script src="validate.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+            <script src="validate.js"></script>
         <%
             String alertMess = (String) request.getAttribute("notificationMessage");
             if (alertMess != null && !alertMess.isEmpty()) {
@@ -368,8 +351,8 @@
                         .catch(error => console.error('Error:', error));
             }
         </script>
-        
 
-        
+
+
     </body>
 </html>

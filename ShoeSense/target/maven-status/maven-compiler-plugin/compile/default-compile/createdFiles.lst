@@ -7,13 +7,16 @@ Ultis\Helper.class
 Controller\HomeController.class
 Modals\OrderDetail.class
 Modals\Order.class
+DAOs\CommentDAO.class
 Controller\OrderManagementController$1.class
 DAOs\CartDAO.class
 Modals\OrderStatusLog.class
 DAOs\OrderStatusLogDAO.class
 Controller\ImportManagementController.class
 Controller\CheckoutController.class
+Controller\CommentManagementController.class
 Controller\AdminStaffManagementController.class
+Modals\Comment.class
 Modals\Import.class
 Modals\ProductVariant.class
 DAOs\OrderDetailDAO.class
