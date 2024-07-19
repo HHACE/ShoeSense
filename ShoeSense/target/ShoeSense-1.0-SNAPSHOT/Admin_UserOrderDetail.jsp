@@ -24,6 +24,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -215,16 +216,14 @@
         </style>
     </head>
     <body class="allbody">
-               <%
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
 
-            
+            Account temp = null;
+
             if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -235,21 +234,21 @@
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             } else {
-            
+
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -257,32 +256,31 @@
                             session.setAttribute("id", cookie.getValue());
                             AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
+
                             flag = true;
                             break;
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/Login");
                 }
             }
 
-      
 
         %>
-    
-     <a href="" class="navbar ps-5">
+
+        <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
         <div class="main-body">
@@ -296,35 +294,34 @@
 
                         <div>
                             <p>Status:
-                                <%
-                                  int userID = (int) request.getAttribute("userID");
-                       
-                                %>
-                                
-                                <a href="/ShoeSense/admin/user/manage/detail/order/processing/<%=userID%>"  class="btn btn-secondary" >Processing</a>
-                                <a href="/ShoeSense/admin/user/manage/detail/order/shipping/<%=userID%>"  class="btn btn-secondary" >Shipping</a>
-                                <a href="/ShoeSense/admin/user/manage/detail/order/cancel/<%=userID%>"  class="btn btn-secondary" >Cancel</a>
-                                <a href="/ShoeSense/admin/user/manage/detail/order/delivered/<%=userID%>"  class="btn btn-secondary" >Delivered</a>
-                            </p>
+                            <%                                    int userID = (int) request.getAttribute("userID");
 
-                        </div>
+                            %>
 
-                        <table id="example">
-                            <thead>
-                                <tr>
-                                    <th class="align-middle">Order ID</th>
-                                    <th class="align-middle">Account</th>
-                                    <th class="align-middle">Address</th>
-                                    <th class="align-middle">Phone</th>
-                                    
-                                    <th class="align-middle">Total</th>
-                                    <th class="align-middle">Purchase Method</th>
-                                    <th class="align-middle">Purchase Date</th>
-                                    <th class="align-middle">Status</th>
-                                    <th class="align-middle">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                            <a href="/ShoeSense/admin/user/manage/detail/order/processing/<%=userID%>"  class="btn btn-secondary" >Processing</a>
+                            <a href="/ShoeSense/admin/user/manage/detail/order/shipping/<%=userID%>"  class="btn btn-secondary" >Shipping</a>
+                            <a href="/ShoeSense/admin/user/manage/detail/order/cancel/<%=userID%>"  class="btn btn-secondary" >Cancel</a>
+                            <a href="/ShoeSense/admin/user/manage/detail/order/delivered/<%=userID%>"  class="btn btn-secondary" >Delivered</a>
+                        </p>
+
+                    </div>
+
+                    <table id="example">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Order ID</th>
+                                <th class="align-middle">Account</th>
+                                <th class="align-middle">Address</th>
+                                <th class="align-middle">Phone</th>
+
+                                <th class="align-middle">Total</th>
+                                <th class="align-middle">Purchase Method</th>
+                                <th class="align-middle">Purchase Date</th>
+                                <th class="align-middle">Status</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <%                                OrderDAO odao = new OrderDAO();
                                 AccountDAO adao2 = new AccountDAO();
                                 OrderStatusLogDAO osldao = new OrderStatusLogDAO();
@@ -350,12 +347,12 @@
                                     </p>
                                 </td>
                                 <td class="align-middle"><p><%= i.getPaymentMethod()%></p></td>
-                                <%
-                                    for (OrderStatusLog osl : osll) {
-                                        if (osl.getOrderStatus().equals("Processing")) {
+                                        <%
+                                            for (OrderStatusLog osl : osll) {
+                                                if (osl.getOrderStatus().equals("Processing")) {
 
 
-                                %>
+                                        %>
                                 <td class="align-middle"><p><%= osl.getStatusDate()%></p></td>
 
                                 <%
@@ -434,7 +431,7 @@
                                                     <form action="" method="post">
                                                         <input type="hidden" name="orderID" value="<%= i.getOrderID()%>">
                                                         <input type="hidden" name="userID" value="<%= i.getAccountID()%>">
-                                                         <input type="hidden" name="staffID" value="<%= temp.getAccountID()%>">
+                                                        <input type="hidden" name="staffID" value="<%= temp.getAccountID()%>">
 
 
                                                         <%

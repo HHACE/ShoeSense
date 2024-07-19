@@ -159,7 +159,7 @@
         %>
 <jsp:include page="Header_User.jsp"></jsp:include>
 
-<main class="mt-5 pt-4">
+<main class="mt-5 pt-4" style="padding-bottom: 100px">
     <div class="container">
         <!-- Heading -->
         <h2 class="my-5 text-center">Checkout form</h2>

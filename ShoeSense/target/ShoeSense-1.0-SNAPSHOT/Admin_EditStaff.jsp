@@ -14,11 +14,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-       <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script>
             $(document).ready(function () {
                 $('#example').DataTable();
@@ -158,16 +159,14 @@
         </style>
     </head>
     <body class="allbody">
-           <%
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
 
-            
+            Account temp = null;
+
             if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -178,21 +177,21 @@
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             } else {
-            
+
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -200,37 +199,36 @@
                             session.setAttribute("id", cookie.getValue());
                             AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
+
                             flag = true;
                             break;
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/Login");
                 }
             }
 
-           
+
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
         <div class="main-body">
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-            <div id="editEmployeeModal" class="container mt-5 bg-white p-5 rounded-5">
-                <%
-                    Account staff = (Account) request.getAttribute("Staff");
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+                <div id="editEmployeeModal" class="container mt-5 bg-white p-5 rounded-5">
+                <%                    Account staff = (Account) request.getAttribute("Staff");
                     if (staff != null) {
                 %>
                 <form action="" method="post" >
@@ -246,41 +244,41 @@
                         <div class="form-group">
                             <label>Staff Name</label>
                             <input value="<%= staff.getAccountName()%>" id="name" name="name" type="text" class="form-control" required>
-                        <p id="nameerror"></p>
+                            <p id="nameerror"></p>
                         </div>
-                        
-                                                   <div class="form-group">
-                                <label class="form-label fw-bold">Gender:</label>
-                                <div id="gender" class="ratio-box">
-                                    <input type="radio" id="male" name="gender" value="Male" class="form-check-input"
-                                           <%= staff.getAccountGender().equals("Male") ? "checked" : ""%> >
-                                    <label for="male" class="form-check-label">Male</label>
 
-                                    <input type="radio" id="female" name="gender" value="Female" class="form-check-input"
-                                           <%= staff.getAccountGender().equals("Female") ? "checked" : ""%> >
-                                    <label for="female" class="form-check-label">Female</label>
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Gender:</label>
+                            <div id="gender" class="ratio-box">
+                                <input type="radio" id="male" name="gender" value="Male" class="form-check-input"
+                                       <%= staff.getAccountGender().equals("Male") ? "checked" : ""%> >
+                                <label for="male" class="form-check-label">Male</label>
 
-                                    <input type="radio" id="other" name="gender" value="Other" class="form-check-input"
-                                           <%= staff.getAccountGender().equals("Other") ? "checked" : ""%> >
-                                    <label for="other" class="form-check-label">Other</label>
-                                </div>
-                                <p id="gendererror"></p>
+                                <input type="radio" id="female" name="gender" value="Female" class="form-check-input"
+                                       <%= staff.getAccountGender().equals("Female") ? "checked" : ""%> >
+                                <label for="female" class="form-check-label">Female</label>
+
+                                <input type="radio" id="other" name="gender" value="Other" class="form-check-input"
+                                       <%= staff.getAccountGender().equals("Other") ? "checked" : ""%> >
+                                <label for="other" class="form-check-label">Other</label>
                             </div>
-                        
+                            <p id="gendererror"></p>
+                        </div>
+
                         <div class="form-group">
                             <label>Day of birth</label>
                             <input type="date" name="DOB" id="birthday" value="<%= staff.getAccountBirthdate()%>" class="form-control" required >
-                        <p id="DOBerror"></p>
+                            <p id="DOBerror"></p>
                         </div>
                         <div class="form-group">
                             <label>Phone number</label>
                             <input type="text" name="phone" id="phone" class="form-control"  value="<%= staff.getAccountPhone()%>"  pattern="^0+[0-9]{9,10}$" required title="Please enter a valid phone number starting with 0 and followed by 9 to 10 digits">
-                        <p id="phoneerror"></p>
+                            <p id="phoneerror"></p>
                         </div>
                         <div class="form-group">
                             <label>Address</label>
                             <textarea name="address" id="address" class="form-control"  required ><%= staff.getAccountAddress()%></textarea>
-                        <p id="ADerror"></p>
+                            <p id="ADerror"></p>
                         </div>
                     </div>
                     <div class="update">
@@ -296,8 +294,8 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    
-            <%
+
+        <%
             String alertMess = (String) request.getAttribute("alertMess");
             if (alertMess != null && !alertMess.isEmpty()) {
         %>
@@ -307,6 +305,6 @@
         <%
             }
         %>
-    
+
     </body>
 </html>
