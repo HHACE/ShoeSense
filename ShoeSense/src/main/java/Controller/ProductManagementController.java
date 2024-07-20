@@ -338,3 +338,246 @@ public class ProductManagementController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+
+// package Controller;
+
+// import DAOs.CartDAO;
+// import DAOs.ImportDAO;
+// import DAOs.ProductDAO;
+// import Modals.Product;
+// import java.io.File;
+// import java.io.IOException;
+// import java.io.PrintWriter;
+// import java.sql.SQLException;
+// import java.text.NumberFormat;
+// import java.util.List;
+// import java.util.Locale;
+// import java.util.Properties;
+// import java.util.logging.Level;
+// import java.util.logging.Logger;
+// import javax.mail.Authenticator;
+// import javax.mail.Message;
+// import javax.mail.PasswordAuthentication;
+// import javax.mail.Session;
+// import javax.mail.Transport;
+// import javax.mail.internet.InternetAddress;
+// import javax.mail.internet.MimeMessage;
+// import jakarta.servlet.ServletException;
+// import jakarta.servlet.annotation.MultipartConfig;
+// import jakarta.servlet.http.HttpServlet;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+// import jakarta.servlet.http.Part;
+
+// @MultipartConfig
+// public class ProductManagementController extends HttpServlet {
+
+//     private static final Logger LOGGER = Logger.getLogger(ProductManagementController.class.getName());
+
+//     @Override
+//     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//             throws ServletException, IOException {
+//         String type = request.getParameter("type");
+//         ProductDAO productDAO = new ProductDAO();
+//         CartDAO cartDAO = new CartDAO();
+
+//         switch (type) {
+//             case "view":
+//                 List<Product> list = productDAO.getAllProduct();
+//                 request.setAttribute("list", list);
+//                 request.getRequestDispatcher("/Admin_ProductManagement.jsp").forward(request, response);
+//                 break;
+//             case "delete":
+//                 try {
+//                     int productIdDelete = Integer.parseInt(request.getParameter("pid"));
+//                     productDAO.deleteProductByID(productIdDelete);
+//                     response.sendRedirect("manage?type=view");
+//                 } catch (NumberFormatException | SQLException e) {
+//                     LOGGER.log(Level.SEVERE, "Error deleting product", e);
+//                     response.sendRedirect("manage?type=view&error=delete");
+//                 }
+//                 break;
+//             case "update":
+//                 try {
+//                     Product productUpdate = productDAO.getProductById(Integer.parseInt(request.getParameter("pid")));
+//                     request.setAttribute("data", productUpdate);
+//                     request.getRequestDispatcher("/Admin_ProductUpdate.jsp").forward(request, response);
+//                 } catch (NumberFormatException | SQLException e) {
+//                     LOGGER.log(Level.SEVERE, "Error retrieving product for update", e);
+//                     response.sendRedirect("manage?type=view&error=update");
+//                 }
+//                 break;
+//             case "hide":
+//                 try {
+//                     productDAO.hideProduct(Integer.parseInt(request.getParameter("pid")));
+//                     response.sendRedirect("manage?type=view");
+//                 } catch (NumberFormatException | SQLException e) {
+//                     LOGGER.log(Level.SEVERE, "Error hiding product", e);
+//                     response.sendRedirect("manage?type=view&error=hide");
+//                 }
+//                 break;
+//             case "public":
+//                 try {
+//                     productDAO.unhideProduct(Integer.parseInt(request.getParameter("pid")));
+//                     response.sendRedirect("manage?type=view");
+//                 } catch (NumberFormatException | SQLException e) {
+//                     LOGGER.log(Level.SEVERE, "Error making product public", e);
+//                     response.sendRedirect("manage?type=view&error=public");
+//                 }
+//                 break;
+//             default:
+//                 List<Product> listDefault = productDAO.getAllProduct();
+//                 request.setAttribute("list", listDefault);
+//                 request.getRequestDispatcher("/Admin_ProductManagement.jsp").forward(request, response);
+//                 break;
+//         }
+//     }
+
+//     @Override
+//     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//             throws ServletException, IOException {
+//         String path = request.getRequestURI();
+//         ProductDAO productDAO = new ProductDAO();
+
+//         switch (path) {
+//             case "/ShoeSense/product/manage":
+//                 handleProductManagement(request, response, productDAO);
+//                 break;
+//             default:
+//                 response.sendRedirect("manage?type=view&error=invalid");
+//                 break;
+//         }
+//     }
+
+//     private void handleProductManagement(HttpServletRequest request, HttpServletResponse response, ProductDAO productDAO) throws ServletException, IOException {
+//         String type = request.getParameter("type");
+//         switch (type) {
+//             case "add":
+//                 addProduct(request, response, productDAO);
+//                 break;
+//             case "update":
+//                 updateProduct(request, response, productDAO);
+//                 break;
+//             default:
+//                 response.sendRedirect("manage?type=view&error=invalid");
+//                 break;
+//         }
+//     }
+
+//     private void addProduct(HttpServletRequest request, HttpServletResponse response, ProductDAO productDAO) throws ServletException, IOException {
+//         try {
+//             String productName = request.getParameter("name");
+//             String productPrice = request.getParameter("price");
+//             Part filePart = request.getPart("img");
+//             String uploadPath = getServletContext().getRealPath("") + "img/product";
+//             File uploadDir = new File(uploadPath);
+//             if (!uploadDir.exists()) {
+//                 uploadDir.mkdir();
+//             }
+
+//             String fileName = getFileName(filePart);
+//             String filePath = uploadPath + File.separator + fileName;
+//             filePart.write(filePath);
+//             String category = request.getParameter("category");
+//             String description = request.getParameter("description");
+
+//             List<Product> existingProducts = productDAO.getAllProduct();
+//             boolean productExists = existingProducts.stream()
+//                     .anyMatch(p -> p.getProductName().equalsIgnoreCase(productName));
+
+//             if (!productExists) {
+//                 productDAO.AddNew(new Product(productName, Double.parseDouble(productPrice), "./img/product/" + fileName, category, description, "Hide"));
+//                 response.sendRedirect("manage?type=view");
+//             } else {
+//                 request.setAttribute("alertMess", "Product already exists");
+//                 List<Product> listDefault = productDAO.getAllProduct();
+//                 request.setAttribute("list", listDefault);
+//                 request.getRequestDispatcher("/Admin_ProductManagement.jsp").forward(request, response);
+//             }
+//         } catch (NumberFormatException | SQLException e) {
+//             LOGGER.log(Level.SEVERE, "Error adding product", e);
+//             response.sendRedirect("manage?type=view&error=add");
+//         }
+//     }
+
+//     private void updateProduct(HttpServletRequest request, HttpServletResponse response, ProductDAO productDAO) throws ServletException, IOException {
+//         try {
+//             String id = request.getParameter("id");
+//             String productName = request.getParameter("name");
+//             String productPrice = request.getParameter("price");
+//             Part filePart = request.getPart("img");
+//             String uploadPath = getServletContext().getRealPath("") + "img/product";
+//             File uploadDir = new File(uploadPath);
+//             if (!uploadDir.exists()) {
+//                 uploadDir.mkdir();
+//             }
+
+//             String fileName = getFileName(filePart);
+//             String filePath = uploadPath + File.separator + fileName;
+//             filePart.write(filePath);
+//             String category = request.getParameter("category");
+//             String description = request.getParameter("description");
+
+//             productDAO.updateProduct(new Product(Integer.parseInt(id), productName, Double.parseDouble(productPrice), "./img/product/" + fileName, category, description, productDAO.getProductById(Integer.parseInt(id)).getProductStatus()));
+//             response.sendRedirect("manage?type=view");
+//         } catch (NumberFormatException | SQLException e) {
+//             LOGGER.log(Level.SEVERE, "Error updating product", e);
+//             response.sendRedirect("manage?type=view&error=update");
+//         }
+//     }
+
+//     private String getFileName(Part part) {
+//         String contentDisposition = part.getHeader("content-disposition");
+//         String[] tokens = contentDisposition.split(";");
+//         for (String token : tokens) {
+//             if (token.trim().startsWith("filename")) {
+//                 return token.substring(token.indexOf('=') + 1).trim().replace("\"", "");
+//             }
+//         }
+//         return null;
+//     }
+
+//     private String formatCurrency(float amount) {
+//         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+//         return currencyFormatter.format(amount);
+//     }
+
+//     private boolean sendEmail(String to, String subject, String body) {
+//         final String from = "fstore1703@gmail.com";
+//         final String password = "nlsdqrjpgtagttqi";
+//         Properties props = new Properties();
+//         props.put("mail.smtp.host", "smtp.gmail.com");
+//         props.put("mail.smtp.port", "587");
+//         props.put("mail.smtp.auth", "true");
+//         props.put("mail.smtp.starttls.enable", "true");
+
+//         Authenticator auth = new Authenticator() {
+//             @Override
+//             protected PasswordAuthentication getPasswordAuthentication() {
+//                 return new PasswordAuthentication(from, password);
+//             }
+//         };
+
+//         Session session = Session.getInstance(props, auth);
+//         MimeMessage msg = new MimeMessage(session);
+
+//         try {
+//             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+//             msg.setFrom(from);
+//             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+//             msg.setSubject(subject, "UTF-8");
+//             msg.setContent(body, "text/HTML; charset=UTF-8");
+//             Transport.send(msg);
+//             return true;
+//         } catch (Exception e) {
+//             LOGGER.log(Level.SEVERE, "Error sending email", e);
+//             return false;
+//         }
+//     }
+
+//     @Override
+//     public String getServletInfo() {
+//         return "Product Management Controller";
+//     }
+// }
