@@ -197,3 +197,100 @@ public class ImportManagementController extends HttpServlet {
     }// </editor-fold>
 
 }
+
+
+// package Controller;
+
+// import DAOs.AccountDAO;
+// import DAOs.ImportDAO;
+// import DAOs.ProductDAO;
+// import DAOs.ProductVariantDAO;
+// import Modals.Import;
+// import Modals.Product;
+// import Modals.ProductVariant;
+// import java.io.IOException;
+// import java.io.PrintWriter;
+// import java.sql.SQLException;
+// import java.time.LocalDateTime;
+// import java.util.List;
+// import java.util.logging.Level;
+// import java.util.logging.Logger;
+// import jakarta.servlet.ServletException;
+// import jakarta.servlet.http.HttpServlet;
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+
+// public class ImportManagementController extends HttpServlet {
+
+//     private static final Logger LOGGER = Logger.getLogger(ImportManagementController.class.getName());
+
+//     @Override
+//     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//             throws ServletException, IOException {
+//         String path = request.getRequestURI();
+//         request.getRequestDispatcher("/Admin_ImportManagement.jsp").forward(request, response);
+//     }
+
+//     @Override
+//     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//             throws ServletException, IOException {
+//         String action = request.getParameter("addNewImport");
+
+//         if ("Add".equals(action)) {
+//             try {
+//                 int staffID = Integer.parseInt(request.getParameter("staffID"));
+//                 String productName = request.getParameter("name");
+//                 String size = request.getParameter("size");
+//                 String color = request.getParameter("color");
+//                 int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+//                 ProductDAO productDAO = new ProductDAO();
+//                 ProductVariantDAO variantDAO = new ProductVariantDAO();
+//                 ImportDAO importDAO = new ImportDAO();
+
+//                 Product product = productDAO.getProductByName(productName);
+//                 if (product == null || product.getProductID() == 0) {
+//                     product = new Product(productName, 0, null, null, null, "Hide");
+//                     productDAO.AddNew(product);
+//                     product = productDAO.getProductByName(productName);
+//                 }
+
+//                 ProductVariant variant = findOrCreateVariant(size, color, quantity, product, variantDAO);
+//                 LocalDateTime currentTime = LocalDateTime.now();
+//                 Import importRecord = new Import(currentTime, staffID, product.getProductID(), variant.getVariantID(), quantity);
+
+//                 importDAO.AddNew(importRecord);
+//                 request.setAttribute("alertMess", "Nhập hàng thành công");
+
+//             } catch (NumberFormatException | SQLException e) {
+//                 LOGGER.log(Level.SEVERE, "Lỗi khi xử lý nhập hàng", e);
+//                 request.setAttribute("alertMess", "Nhập hàng thất bại, vui lòng thử lại");
+//             }
+
+//             request.getRequestDispatcher("/Admin_ImportManagement.jsp").forward(request, response);
+//         }
+//     }
+
+//     private ProductVariant findOrCreateVariant(String size, String color, int quantity, Product product, ProductVariantDAO variantDAO) throws SQLException {
+//         List<ProductVariant> variantList = variantDAO.getAllProductVariantByProductID(product.getProductID());
+//         ProductVariant variant = null;
+
+//         for (ProductVariant variantTemp : variantList) {
+//             if (variantTemp.getVariantSize().equalsIgnoreCase(size) && variantTemp.getVariantColor().equalsIgnoreCase(color)) {
+//                 int newQuantity = variantTemp.getVariantQuantity() + quantity;
+//                 variantTemp.setVariantQuantity(Math.max(newQuantity, 0));
+//                 variantDAO.updateProductVariant(variantTemp);
+//                 return variantTemp;
+//             }
+//         }
+
+//         variant = new ProductVariant(product.getProductID(), null, size, color, quantity);
+//         variantDAO.AddNew(variant);
+//         return variant;
+//     }
+
+//     @Override
+//     public String getServletInfo() {
+//         return "Điều khiển quản lý nhập hàng";
+//     }
+// }
