@@ -551,7 +551,7 @@ public class ProductManagementController extends HttpServlet {
 //         props.put("mail.smtp.port", "587");
 //         props.put("mail.smtp.auth", "true");
 //         props.put("mail.smtp.starttls.enable", "true");
-
+//Thang
 //         Authenticator auth = new Authenticator() {
 //             @Override
 //             protected PasswordAuthentication getPasswordAuthentication() {
