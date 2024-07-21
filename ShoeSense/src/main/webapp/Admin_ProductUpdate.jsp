@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -156,16 +157,14 @@
         </style>
     </head>
     <body class="allbody">
-               <%
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
 
-            
+            Account temp = null;
+
             if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -176,21 +175,21 @@
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             } else {
-            
+
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -198,59 +197,57 @@
                             session.setAttribute("id", cookie.getValue());
                             AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
+
                             flag = true;
                             break;
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/Login");
                 }
             }
 
-      
 
         %>
-        
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
+
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
             <div id="editEmployeeModal" class="container mt-5 bg-white p-5 rounded-5">
 
                 <form action="" method="post" enctype="multipart/form-data" >

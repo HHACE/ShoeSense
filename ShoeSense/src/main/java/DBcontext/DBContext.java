@@ -29,7 +29,7 @@ public class DBContext {
             conn = DriverManager.getConnection("jdbc:sqlserver://MSI\\SQLEXPRESS:1433;"
                     
                             + "databaseName=ShoeSense;"
-                            + "user=sa;password=SQLServer123;"
+                            + "user=sa;password=123;"
                             + "encrypt=true;"
                             + "trustServerCertificate=true;");
         } catch (ClassNotFoundException ex) {

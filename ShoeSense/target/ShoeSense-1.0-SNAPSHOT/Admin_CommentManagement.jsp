@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script>
             $(document).ready(function () {
                 $('#example').DataTable();
@@ -273,105 +274,101 @@
 
 
         %>
-          
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
-                <div class="body">
-                    <div id="manageproduct" class="manageproduct">
-                        <h2>Comment management</h2>
 
-          
-                       
-                        <table id="example" >
-                            <thead>
-                                <tr>
-                                    <th>CommentID</th>
-                                    <th>ProductID</th>
-                                    <th>Product Name</th>
-                                    <th>AccountID</th>
-                                    <th>Account Name</th>
-                                     <th>Content</th>
-                                    <th>Created Date</th>
-                                    <th>Status</th>
-                                    <th></th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="data">
-                      <%
-
-                          
-                             int productID = (int) session.getAttribute("ProductID");
-            ProductDAO dao = new ProductDAO();
-            CommentDAO cdao = new CommentDAO();
-            AccountDAO adao2 = new AccountDAO();
-            List<Comment> lc = cdao.getAllCommentByProductID(productID   );
-  Product pro = dao.getProductById(productID);
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
+            <div class="body">
+                <div id="manageproduct" class="manageproduct">
+                    <h2>Comment management</h2>
 
 
-    for (Comment com : lc){
-                      Account acc = adao2.GetAccountById(Integer.toString( com.getAccountID()));
 
-                      %>
-                                                      <tr>
-                                    <td><%= com.getCommentID() %></td>
-                                    <td><%= com.getProductID()%></td>
-                                    <td><%= pro.getProductName()%></td>
-                                     <td><%= com.getAccountID()%></td>
-                                     <td><%= acc.getAccountName()%></td>
-                                     <td><%= com.getContent()%></td>
-                                     <td><%= com.getCreatedDate()%></td>
-                                     <td><%= com.getCommentStatus()%></td>
-                                     <td>
-                                         
-                                         <form method="post" action="">
-                                            <input value="<%= com.getCommentID() %>" name="commentID" id="commentID"  type="hidden">
-                                            <%
-                                            if(com.getCommentStatus().equalsIgnoreCase("Public")){
-                                            %>
-                                            <button type="submit" name="btnHide" id="btnHide" class="btn btn-danger m-2">Hide</button>
-                                                                                      <%
-                                                                                          } else{
-                                            %>
-                                          <button type="submit" name="btnPublic" id="btnPublic" class="btn btn-danger m-2">Public</button>
-                                                                                    <%
-                                                                                        }
-                                            %>
-                                            
-                                        </form>
-    
-                                     </td>
+                    <table id="example" >
+                        <thead>
+                            <tr>
+                                <th>CommentID</th>
+                                <th>ProductID</th>
+                                <th>Product Name</th>
+                                <th>AccountID</th>
+                                <th>Account Name</th>
+                                <th>Content</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                                <th></th>
 
-                                </tr>
-                      <%
-                          }
-                      %>
+                            </tr>
+                        </thead>
+                        <tbody id="data">
+                            <%
+                                int productID = (int) session.getAttribute("ProductID");
+                                ProductDAO dao = new ProductDAO();
+                                CommentDAO cdao = new CommentDAO();
+                                AccountDAO adao2 = new AccountDAO();
+                                List<Comment> lc = cdao.getAllCommentByProductID(productID);
+                                Product pro = dao.getProductById(productID);
+
+                                for (Comment com : lc) {
+                                    Account acc = adao2.GetAccountById(Integer.toString(com.getAccountID()));
+
+                            %>
+                            <tr>
+                                <td><%= com.getCommentID()%></td>
+                                <td><%= com.getProductID()%></td>
+                                <td><%= pro.getProductName()%></td>
+                                <td><%= com.getAccountID()%></td>
+                                <td><%= acc.getAccountName()%></td>
+                                <td><%= com.getContent()%></td>
+                                <td><%= com.getCreatedDate()%></td>
+                                <td><%= com.getCommentStatus()%></td>
+                                <td>
+
+                                    <form method="post" action="">
+                                        <input value="<%= com.getCommentID()%>" name="commentID" id="commentID"  type="hidden">
+                                        <%
+                                            if (com.getCommentStatus().equalsIgnoreCase("Public")) {
+                                        %>
+                                        <button type="submit" name="btnHide" id="btnHide" class="btn btn-danger m-2">Hide</button>
+                                        <%
+                                        } else {
+                                        %>
+                                        <button type="submit" name="btnPublic" id="btnPublic" class="btn btn-danger m-2">Public</button>
+                                        <%
+                                            }
+                                        %>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                            <%
+                                }
+                            %>
                         </tbody>
                     </table>
                 </div>
@@ -379,18 +376,18 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
- 
-        
-                        <%
+
+
+        <%
             String alertMess = (String) request.getAttribute("alertMess");
             if (alertMess != null && !alertMess.isEmpty()) {
         %>
         <script>
-                            alert("<%= alertMess%>");
+            alert("<%= alertMess%>");
         </script>
         <%
             }
         %>
-        
+
     </body>
 </html>

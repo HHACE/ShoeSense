@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script>
             $(document).ready(function () {
                 $('#example').DataTable();
@@ -275,61 +276,60 @@
 
 
         %>
-         
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
-                <div class="body">
-                    <div id="manageproduct" class="manageproduct">
-                        <h2>Import data</h2>
 
-                        <a href="#addImportModal" class="btn btn-success m-2" id="btnaddimport" data-toggle="modal">
-                            <i class="fa fa-plus"></i> 
-                            <span>Add New Product</span>
-                        </a>
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
+            <div class="body">
+                <div id="manageproduct" class="manageproduct">
+                    <h2>Import data</h2>
 
-                        <table id="example">
-                            <thead>
-                                <tr>
-                                    <th class="align-middle">Import ID</th>
-                                    <th class="align-middle">Account ID</th>
-                                    <th class="align-middle">Account Name</th>
-                                    <th class="align-middle">Product ID</th>
-                                    <th class="align-middle">Product Name</th>
-                                    <th class="align-middle">Variant ID</th>
-                                    <th class="align-middle">Variant Size</th>
-                                    <th class="align-middle">Variant Color</th>
-                                    <th class="align-middle">Quantity</th>
-                                    <th class="align-middle">Import Date</th>
-                                    <th class="align-middle">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="data">
+                    <a href="#addImportModal" class="btn btn-success m-2" id="btnaddimport" data-toggle="modal">
+                        <i class="fa fa-plus"></i> 
+                        <span>Add New Product</span>
+                    </a>
+
+                    <table id="example">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Import ID</th>
+                                <th class="align-middle">Account ID</th>
+                                <th class="align-middle">Account Name</th>
+                                <th class="align-middle">Product ID</th>
+                                <th class="align-middle">Product Name</th>
+                                <th class="align-middle">Variant ID</th>
+                                <th class="align-middle">Variant Size</th>
+                                <th class="align-middle">Variant Color</th>
+                                <th class="align-middle">Quantity</th>
+                                <th class="align-middle">Import Date</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data">
                             <%                        ImportDAO impdao = new ImportDAO();
                                 AccountDAO accdao = new AccountDAO();
                                 ProductDAO prodao = new ProductDAO();

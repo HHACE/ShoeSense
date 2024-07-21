@@ -21,7 +21,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-<!--        <link rel="stylesheet" href="style.css">-->
+        <!--        <link rel="stylesheet" href="style.css">-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -276,52 +277,51 @@
 
         %>
 
-          
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
-                <div class="body">
-                    <div id="manageproduct" class="manageproduct">
-                        <h2>Variant data</h2>
 
-                        <table id="example" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="align-middle">Variant ID</th>
-                                    <th class="align-middle">Product ID</th>
-                                    <th class="align-middle">Variant Image</th>
-                                    <th class="align-middle">Variant Size</th>
-                                    <th class="align-middle">Variant Color</th>
-                                    <th class="align-middle">Variant Quantity</th>
-                                    <th class="align-middle">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="data">
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
+            <div class="body">
+                <div id="manageproduct" class="manageproduct">
+                    <h2>Variant data</h2>
+
+                    <table id="example" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="align-middle">Variant ID</th>
+                                <th class="align-middle">Product ID</th>
+                                <th class="align-middle">Variant Image</th>
+                                <th class="align-middle">Variant Size</th>
+                                <th class="align-middle">Variant Color</th>
+                                <th class="align-middle">Variant Quantity</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data">
                             <%                                ProductDAO prodao = new ProductDAO();
                                 ProductVariantDAO vardao = new ProductVariantDAO();
 

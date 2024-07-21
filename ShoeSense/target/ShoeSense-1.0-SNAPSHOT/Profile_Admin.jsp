@@ -296,143 +296,124 @@
         
         <!--Body home page-->
         <div class="container p-5">
-            <div class="user-detail bg-white p-5">
-                <div class="container">
-                    <div>
-                        <h3 class="m-3">Hồ sơ của tôi</h3>
-                        <hr/>
-                        <div class="row p-3 bg-body-tertiary rounded-5" id="profile">
-                            <div class="col-9">
-                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">Email</label>
-                                    <span class="col-8 fs-4"><%= u.getAccountEmail()%></span>
-                                </div>
-                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">User name</label>
-                                    <span class="col-8 fs-4"><%= u.getAccountName()%></span>
-                                </div>
-                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">Gender</label>
-                                    <span class="col-8 fs-4"><%= u.getAccountGender()%></span>
-                                </div>
-                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">Day of birth</label>
-                                    <span class="col-8 fs-4">
-                                        <%
-                                            SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                            SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
-//                                            Date dateOfBirth = u.getAccountBirthdate();
-                                            String formattedDateOfBirth = newFormat.format(u.getAccountBirthdate());
-
-                                        %>
-                                        <%= formattedDateOfBirth%>
-                                    </span>
-                                </div>
-                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">Phone number</label>
-                                    <span class="col-8 fs-4"><%= u.getAccountPhone()%></span>
-                                </div>
-                                                                <div class="row m-3">
-                                    <label class="col-3 fs-4 fw-bold">Address</label>
-                                    <span class="col-8 fs-4"><%= u.getAccountAddress()%></span>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <button class="fs-4 p-2 m-3 rounded-3" id="showedit">Chỉnh sửa</button>
-                                <button class="fs-4 p-2 m-3 rounded-3" id="showchangepass" >Đổi mật khẩu</button>
-                            </div>
+    <div class="user-detail bg-white p-5">
+        <div class="container">
+            <div>
+                <h3 class="m-3">My Profile</h3>
+                <hr/>
+                <div class="row p-3 bg-body-tertiary rounded-5" id="profile">
+                    <div class="col-md-9">
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Email:</label>
+                            <span class="col fs-5"><%= u.getAccountEmail()%></span>
+                        </div>
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Username:</label>
+                            <span class="col fs-5"><%= u.getAccountName()%></span>
+                        </div>
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Gender:</label>
+                            <span class="col fs-5"><%= u.getAccountGender()%></span>
+                        </div>
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Day of Birth:</label>
+                            <span class="col fs-5">
+                                <% SimpleDateFormat oldFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                   SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
+//                                   Date dateOfBirth = u.getAccountBirthdate();
+                                   String formattedDateOfBirth = newFormat.format(u.getAccountBirthdate());
+                                %>
+                                <%= formattedDateOfBirth %>
+                            </span>
+                        </div>
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Phone Number:</label>
+                            <span class="col fs-5"><%= u.getAccountPhone()%></span>
+                        </div>
+                        <div class="row m-3">
+                            <label class="col-4 col-md-3 fs-5 fw-bold">Address:</label>
+                            <span class="col fs-5"><%= u.getAccountAddress()%></span>
                         </div>
                     </div>
-
-                    <div class="row" id="editprofile" style="display: none;">
-                        <!--------------------------->
-                        <form action="<%=session.getAttribute("id")%>" method="post" id="editUser"  class="container p-3 bg-body-tertiary rounded-5" >
-                            <h3 class="m-3">Edit profile</h3>
-                            <div class="m-3">
-                                <input type="hidden" name="id" value="<%= u.getAccountID()%>">
-                            </div>
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Username:</label>
-                                <input id="username" type="text" name="username" class="form-control"
-                                       placeholder="Enter username" value="<%= u.getAccountName()%>">
-                                <p id="usernameerror"></p>
-                            </div>
-                          
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Gender:</label>
-                                <div id="gender" class="ratio-box">
-                                    <input type="radio" id="male" name="gender" value="Male" class="form-check-input"
-                                           <%= u.getAccountGender().equals("Male") ? "checked" : ""%> >
-                                    <label for="male" class="form-check-label">Male</label>
-
-                                    <input type="radio" id="female" name="gender" value="Female" class="form-check-input"
-                                           <%= u.getAccountGender().equals("Female") ? "checked" : ""%> >
-                                    <label for="female" class="form-check-label">Female</label>
-
-                                    <input type="radio" id="other" name="gender" value="Other" class="form-check-input"
-                                           <%= u.getAccountGender().equals("Other") ? "checked" : ""%> >
-                                    <label for="other" class="form-check-label">Other</label>
-                                </div>
-                                <p id="gendererror"></p>
-                            </div>
-                          
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Day of birth:</label>
-                                <input id="birthday" type="date" name="birthday" class="form-control"
-                                       value="<%= u.getAccountBirthdate()%>">
-                                <p id="birtherror"></p>
-                            </div>
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Phone number:</label>
-                                <input id="phone" type="text" name="phone" class="form-control"
-                                       placeholder="Enter phone number" value="<%= u.getAccountPhone()%>">
-                                <p id="phoneerror"></p>
-                            </div>
-                                                            <div class="m-3">
-                                <label class="form-label fw-bold">Address:</label>
-                                <textarea id="address" name="address"
-                                          class="form-control" placeholder="Enter address"><%= u.getAccountAddress()%></textarea>
-                                <p id="addresserror"></p>
-                            </div>
-                            <div class="m-3" align="center">
-                                <button type="submit" onclick="checkEdit()" class="fs-4 rounded-5 ps-3 pe-3" id="editbtn" name="editbtn" value="edit" >Edit</button>
-                                <button type="button" class="fs-4 rounded-5 ps-3 pe-3" id="backbtn">Back</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-                    <div class="row" id="changepass" style="display: none;">
-                        <form method="post" action="<%=session.getAttribute("id")%>"  class="container p-3 bg-body-tertiary rounded-5">
-                            <h3 class="m-3">Change password</h3>
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Old password:</label>
-                                <input id="oldpass" type="password" name="oldpass" class="form-control"
-                                       placeholder="Enter old password">
-                                <input type="hidden" name="id" value="<%= u.getAccountID()%>">
-                                <p id="oldpasserror"></p>
-                            </div>
-                            <div class="m-3">
-                                <label class="form-label fw-bold">New password:</label>
-                                <input id="newpass" type="password" name="newpass" class="form-control"
-                                       placeholder="Enter new password">
-                                <p id="newpasserror"></p>
-                            </div>
-                            <div class="m-3">
-                                <label class="form-label fw-bold">Confirm new password:</label>
-                                <input id="renewpass" type="password" name="renewpass" class="form-control"
-                                       placeholder="Enter new password again">
-                                <p id="renewpasserror"></p>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" name="changepassbtn" id="changepassbtn" class="fs-4 rounded-5 ps-3 pe-3" onclick="checkChangePass()">Change Password</button>
-                                <button type="button" class="fs-4 rounded-5 ps-3 pe-3" id="backbtn1">Back</button>
-                            </div>
-                        </form>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary fs-5 p-2 m-3 rounded-3" id="showedit">Edit Profile</button>
+                        <button class="btn btn-primary fs-5 p-2 m-3 rounded-3" id="showchangepass">Change Password</button>
                     </div>
                 </div>
             </div>
+
+            <div class="row" id="editprofile" style="display: none;">
+                <form action="<%= session.getAttribute("id") %>" method="post" id="editUser" class="container p-3 bg-body-tertiary rounded-5">
+                    <h3 class="m-3">Edit Profile</h3>
+                    <input type="hidden" name="id" value="<%= u.getAccountID()%>">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Username:</label>
+                        <input id="username" type="text" name="username" class="form-control" placeholder="Enter username" value="<%= u.getAccountName()%>">
+                        <p id="usernameerror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Gender:</label>
+                        <div id="gender" class="ratio-box">
+                            <input type="radio" id="male" name="gender" value="Male" class="form-check-input" <%= u.getAccountGender().equals("Male") ? "checked" : ""%> >
+                            <label for="male" class="form-check-label">Male</label>
+                            <input type="radio" id="female" name="gender" value="Female" class="form-check-input" <%= u.getAccountGender().equals("Female") ? "checked" : ""%> >
+                            <label for="female" class="form-check-label">Female</label>
+                            <input type="radio" id="other" name="gender" value="Other" class="form-check-input" <%= u.getAccountGender().equals("Other") ? "checked" : ""%> >
+                            <label for="other" class="form-check-label">Other</label>
+                        </div>
+                        <p id="gendererror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Day of Birth:</label>
+                        <input id="birthday" type="date" name="birthday" class="form-control" value="<%= u.getAccountBirthdate()%>">
+                        <p id="birtherror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Phone Number:</label>
+                        <input id="phone" type="text" name="phone" class="form-control" placeholder="Enter phone number" value="<%= u.getAccountPhone()%>">
+                        <p id="phoneerror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Address:</label>
+                        <textarea id="address" name="address" class="form-control" placeholder="Enter address"><%= u.getAccountAddress()%></textarea>
+                        <p id="addresserror"></p>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" onclick="checkEdit()" class="btn btn-primary fs-5 rounded-5 ps-3 pe-3" id="editbtn" name="editbtn" value="edit">Edit</button>
+                        <button type="button" class="btn btn-primary fs-5 rounded-5 ps-3 pe-3" id="backbtn">Back</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row" id="changepass" style="display: none;">
+                <form method="post" action="<%= session.getAttribute("id") %>" class="container p-3 bg-body-tertiary rounded-5">
+                    <h3 class="m-3">Change Password</h3>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Old Password:</label>
+                        <input id="oldpass" type="password" name="oldpass" class="form-control" placeholder="Enter old password">
+                        <input type="hidden" name="id" value="<%= u.getAccountID()%>">
+                        <p id="oldpasserror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">New Password:</label>
+                        <input id="newpass" type="password" name="newpass" class="form-control" placeholder="Enter new password">
+                        <p id="newpasserror"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Confirm New Password:</label>
+                        <input id="renewpass" type="password" name="renewpass" class="form-control" placeholder="Enter new password again">
+                        <p id="renewpasserror"></p>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" name="changepassbtn" id="changepassbtn" class="btn btn-primary fs-5 rounded-5 ps-3 pe-3" onclick="checkChangePass()">Change Password</button>
+                        <button type="button" class="btn btn-primary fs-5 rounded-5 ps-3 pe-3" id="backbtn1">Back</button>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
+
      </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

@@ -14,6 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -205,16 +206,14 @@
         </style>
     </head>
     <body class="allbody">
-               <%
+        <%
 
             Cookie[] cookies = request.getCookies();
-            
-            Account temp = null;
-            
 
-            
+            Account temp = null;
+
             if (session.getAttribute("acc") != null) {
-             temp = (Account) session.getAttribute("acc");
+                temp = (Account) session.getAttribute("acc");
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -225,21 +224,21 @@
                         }
                     }
                 }
-                
-                 if (!temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (!temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
             } else {
-            
+
                 boolean flag = false;
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
@@ -247,22 +246,22 @@
                             session.setAttribute("id", cookie.getValue());
                             AccountDAO adao = new AccountDAO();
                             temp = (Account) adao.GetAccountById(cookie.getValue());
-                            
+
                             flag = true;
                             break;
                         }
                     }
                 }
-                
-                 if (temp != null && !temp.getAccountRole().equals("Admin")) {
-                            if (temp.getAccountRole().equals("User")) {
-                 response.sendRedirect("/ShoeSense/");
-               }
+
+                if (temp != null && !temp.getAccountRole().equals("Admin")) {
+                    if (temp.getAccountRole().equals("User")) {
+                        response.sendRedirect("/ShoeSense/");
+                    }
 //                 else {
 //               response.sendRedirect("/ShoeSense/staff");
 //               }
-            }
-                
+                }
+
                 if (!flag) {
                     response.sendRedirect("/ShoeSense/login");
                 }
@@ -270,35 +269,34 @@
 
 
         %>
-         
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
+
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
             <div class="body">
                 <div id="manageproduct" class="manageproduct">
                     <h2>Product management</h2>
@@ -338,23 +336,23 @@
                                     <td>
                                         <a href="manage?type=update&pid=${c.productID}" class="btn btn-primary text-white m-2" ><i class="fa fa-pencil p-1"></i></a>
                                         <button type="button" class="btn btn-danger m-2" onclick="window.location.href = '/ShoeSense/product/variant/${c.productID}'">Variant</button>
-                                          <a href="/ShoeSense/comment/manage/product/${c.productID}" class="btn btn-primary text-white m-2" >Comment</a>
+                                        <a href="/ShoeSense/comment/manage/product/${c.productID}" class="btn btn-primary text-white m-2" >Comment</a>
                                         <form action="deleteProduct">
                                             <input value="${c.productID}" name="id" hidden>
                                             <button type="button" class="btn btn-danger m-2" onclick="confirmDelete(${c.productID})"><i class="fa fa-trash p-1"></i></button>
 
-                                            
+
                                         </form>
-                                            <c:if test="${c.productStatus == 'Public'}">
-                                                 
-                                        <a href="manage?type=hide&pid=${c.productID}" class="btn btn-primary text-white m-2" >Hide</a>
-                                            </c:if>
-                                             <c:if test="${c.productStatus == 'Hide'}">
-                                              <a href="manage?type=public&pid=${c.productID}" class="btn btn-primary text-white m-2" >Public</a>
-                                             </c:if>
-                                              
-                                              
-                                           
+                                        <c:if test="${c.productStatus == 'Public'}">
+
+                                            <a href="manage?type=hide&pid=${c.productID}" class="btn btn-primary text-white m-2" >Hide</a>
+                                        </c:if>
+                                        <c:if test="${c.productStatus == 'Hide'}">
+                                            <a href="manage?type=public&pid=${c.productID}" class="btn btn-primary text-white m-2" >Public</a>
+                                        </c:if>
+
+
+
                                         <script>
                                             function confirmDelete(productId) {
                                                 if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
@@ -437,17 +435,17 @@
                                                 manage.style.display = "block";
                                             });
         </script>
-        
-                        <%
+
+        <%
             String alertMess = (String) request.getAttribute("alertMess");
             if (alertMess != null && !alertMess.isEmpty()) {
         %>
         <script>
-                            alert("<%= alertMess%>");
+            alert("<%= alertMess%>");
         </script>
         <%
             }
         %>
-        
+
     </body>
 </html>

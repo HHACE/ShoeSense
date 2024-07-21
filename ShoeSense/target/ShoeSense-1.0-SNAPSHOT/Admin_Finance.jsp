@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script>
             $(document).ready(function () {
                 $('#example').DataTable();
@@ -70,7 +71,7 @@
 
             .listcontent:hover{
                 font-size: x-large;
-                width: 350px;
+                width: 250px;
                 height: 1900px;
                 background-color: black;
                 color: white;
@@ -87,7 +88,7 @@
 
             .listcontent li{
                 padding: 10px;
-                width: 300px;
+                width: 200px;
                 list-style-type: none;
             }
 
@@ -123,17 +124,12 @@
                 padding-top: 10px;
                 font-size: large;
             }
-
-
-
             .paymentamount{
                 display: flex;
             }
-
             .amount{
                 display: flex;
             }
-
             .today-data{
                 background-color: rgb(207, 179, 235);
                 padding: 10px;
@@ -144,7 +140,6 @@
             .today-data:hover{
                 background-color: rgb(159, 109, 209);
             }
-
             .month-data{
                 background-color: rgb(143, 215, 197);
                 padding: 10px;
@@ -152,7 +147,6 @@
                 border-radius: 10px;
                 width: 350px;
             }
-
             .month-data:hover{
                 background-color: rgb(55, 189, 156);
             }
@@ -163,7 +157,6 @@
                 border-radius: 10px;
                 width: 350px;
             }
-
             .year-data:hover{
                 background-color: rgb(215, 104, 110);
             }
@@ -179,7 +172,6 @@
                 text-align: center;
                 border-radius: 50%;
             }
-
             .manageproduct{
                 background-color: rgb(255, 255, 255);
                 margin: 20px;
@@ -187,19 +179,15 @@
                 padding: 30px;
                 font-size: x-large;
             }
-
             .finance td{
-                width: 50px;
+                width: 50px;          
             }
-
             .addproduct{
                 font-size: x-large;
             }
-
             .buttongroup{
                 text-align: center;
             }
-
             .buttongroup button{
                 width: 100px;
                 padding: 10px;
@@ -209,15 +197,12 @@
                 color: white;
                 background: black;
             }
-
             .buttongroup button:active{
                 border: 1px solid black;
                 color: black;
                 background: white;
             }
-
-   </style>
-        
+        </style>
     </head>
     <body class="allbody">
         <%
@@ -283,40 +268,39 @@
 
 
         %>
-        
-        
-        <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+
+
+        <%            if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
         %>
         <a href="" class="navbar ps-5">
             ShoeSense - ADMIN
         </a>
-                <%
-                    } else {
+        <%
+        } else {
         %>
-                <a href="" class="navbar ps-5">
+        <a href="" class="navbar ps-5">
             ShoeSense - Staff
         </a>
-                <%
-                    }
+        <%
+            }
         %>
         <div class="main-body">
-           
-                     <%
-        if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
-        %>
- <jsp:include page="Header_Admin.jsp"></jsp:include>
-                <%
-                    } else {
-        %>
- <jsp:include page="Header_Staff.jsp"></jsp:include>
-                <%
-                    }
-        %>
+
+            <%
+                if (temp.getAccountRole().equalsIgnoreCase("Admin")) {
+            %>
+            <jsp:include page="Header_Admin.jsp"></jsp:include>
+            <%
+            } else {
+            %>
+            <jsp:include page="Header_Staff.jsp"></jsp:include>
+            <%
+                }
+            %>
 
             <div class="body">
-                
-                   <div class="content container">
+
+                <div class="content container">
                     <h2>Payment amount</h2>
                     <div class="paymentamount pt-4">
                         <div class="today-data">
@@ -325,127 +309,119 @@
                                 <div class="ms-5">
                                     <label>Payment amount</label>
                                     <p>
-                                    <%                      // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
-                                        OrderDAO odao = new OrderDAO();
-                                        OrderStatusLogDAO osldao = new OrderStatusLogDAO();
-                                        List<Order> listo = (List<Order>) request.getAttribute("listOr");
-                                        
-                                        double dailyRevenue = 0;
-                                        LocalDate currentDate = LocalDate.now(); // Get current date
+                                        <%                      // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
+                                            OrderDAO odao = new OrderDAO();
+                                            OrderStatusLogDAO osldao = new OrderStatusLogDAO();
+                                            List<Order> listo = (List<Order>) request.getAttribute("listOr");
 
-                                        for (Order order : listo) {
-                                            List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
-                                            for (OrderStatusLog osl : listosl) {
-                                                if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
-                                                    LocalDateTime statusDateTime = osl.getStatusDate(); // Get LocalDateTime
-                                                    LocalDate statusDate = statusDateTime.toLocalDate(); // Convert LocalDateTime to LocalDate
-                                                    
-                                                    if (statusDate.equals(currentDate)) {
-                                                        dailyRevenue += order.getTotalPrice();
+                                            double dailyRevenue = 0;
+                                            LocalDate currentDate = LocalDate.now(); // Get current date
+
+                                            for (Order order : listo) {
+                                                List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
+                                                for (OrderStatusLog osl : listosl) {
+                                                    if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
+                                                        LocalDateTime statusDateTime = osl.getStatusDate(); // Get LocalDateTime
+                                                        LocalDate statusDate = statusDateTime.toLocalDate(); // Convert LocalDateTime to LocalDate
+
+                                                        if (statusDate.equals(currentDate)) {
+                                                            dailyRevenue += order.getTotalPrice();
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
-                                        DecimalFormat decimalFormat = new DecimalFormat("#,### vnđ");
-                                        String formattedDailyRevenue = decimalFormat.format(dailyRevenue);
-                                        // Hiển thị kết quả trong thẻ <p>
-                                        out.print(formattedDailyRevenue);
-                                    %>
-                                </p>
+                                            // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
+                                            DecimalFormat decimalFormat = new DecimalFormat("#,### vnđ");
+                                            String formattedDailyRevenue = decimalFormat.format(dailyRevenue);
+                                            // Hiển thị kết quả trong thẻ <p>
+                                            out.print(formattedDailyRevenue);
+                                        %>
+                                    </p>
+                                </div>
+                                <i class="fa fa-dollar"></i>
                             </div>
-                            <i class="fa fa-dollar"></i>
                         </div>
-                    </div>
-                    <div class="month-data">
-                        <h5>Sale this month</h5>
-                        <div class="amount">
-                            <div class="ms-5">
-                                <label>Payment amount</label>
-                                <p>
-                                    <%
-                                        // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
-                                        double monthlyRevenue = 0;
-                                        YearMonth currentYearMonth = YearMonth.now(); // Get current year and month
+                        <div class="month-data">
+                            <h5>Sale this month</h5>
+                            <div class="amount">
+                                <div class="ms-5">
+                                    <label>Payment amount</label>
+                                    <p>
+                                        <%
+                                            // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
+                                            double monthlyRevenue = 0;
+                                            YearMonth currentYearMonth = YearMonth.now(); // Get current year and month
 
-                                        for (Order order : listo) {
-                                            List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
-                                            for (OrderStatusLog osl : listosl) {
-                                                if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
-                                                    LocalDate statusDate = osl.getStatusDate().toLocalDate(); // Convert timestamp to LocalDate
-                                                    YearMonth orderYearMonth = YearMonth.from(statusDate); // Get year and month of the order date
+                                            for (Order order : listo) {
+                                                List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
+                                                for (OrderStatusLog osl : listosl) {
+                                                    if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
+                                                        LocalDate statusDate = osl.getStatusDate().toLocalDate(); // Convert timestamp to LocalDate
+                                                        YearMonth orderYearMonth = YearMonth.from(statusDate); // Get year and month of the order date
 
-                                                    if (orderYearMonth.equals(currentYearMonth)) {
-                                                        monthlyRevenue += order.getTotalPrice();
+                                                        if (orderYearMonth.equals(currentYearMonth)) {
+                                                            monthlyRevenue += order.getTotalPrice();
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                        // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
-                                        String formattedMonthlyRevenue = decimalFormat.format(monthlyRevenue);
-                                        // Hiển thị kết quả trong thẻ <p>
-                                        out.print(formattedMonthlyRevenue);
-                                    %>
-                                </p>
+                                            // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
+                                            String formattedMonthlyRevenue = decimalFormat.format(monthlyRevenue);
+                                            // Hiển thị kết quả trong thẻ <p>
+                                            out.print(formattedMonthlyRevenue);
+                                        %>
+                                    </p>
+                                </div>
+                                <i class="fa fa-dollar"></i>
                             </div>
-                            <i class="fa fa-dollar"></i>
                         </div>
-                    </div>
-                    <div class="year-data">
-                        <h5>Sale this year</h5>
-                        <div class="amount">
-                            <div class="ms-5">
-                                <label>Payment amount</label>
-                                <p>
-                                    <%
-                                        // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
-                                        double yearlyRevenue = 0;
-                                        Year currentYear = Year.now(); // Get current year
+                        <div class="year-data">
+                            <h5>Sale this year</h5>
+                            <div class="amount">
+                                <div class="ms-5">
+                                    <label>Payment amount</label>
+                                    <p>
+                                        <%
+                                            // Gọi hàm dailyRevenue để tính toán doanh thu hàng ngày
+                                            double yearlyRevenue = 0;
+                                            Year currentYear = Year.now(); // Get current year
 
-                                        for (Order order : listo) {
-                                            List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
-                                            for (OrderStatusLog osl : listosl) {
-                                                if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
-                                                    LocalDate statusDate = osl.getStatusDate().toLocalDate(); // Convert timestamp to LocalDate
-                                                    Year orderYear = Year.from(statusDate); // Get year of the order date
+                                            for (Order order : listo) {
+                                                List<OrderStatusLog> listosl = osldao.getAllOrderStatusLogByOrderId(order.getOrderID());
+                                                for (OrderStatusLog osl : listosl) {
+                                                    if (osl.getOrderStatus().equalsIgnoreCase("Delivered")) {
+                                                        LocalDate statusDate = osl.getStatusDate().toLocalDate(); // Convert timestamp to LocalDate
+                                                        Year orderYear = Year.from(statusDate); // Get year of the order date
 
-                                                    if (orderYear.equals(currentYear)) {
-                                                        yearlyRevenue += order.getTotalPrice();
+                                                        if (orderYear.equals(currentYear)) {
+                                                            yearlyRevenue += order.getTotalPrice();
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
-                                        // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
-                                        String formattedYearlyRevenue = decimalFormat.format(yearlyRevenue);
-                                        // Hiển thị kết quả trong thẻ <p>
-                                        out.print(formattedYearlyRevenue);
-                                    %>
-                                </p>
+                                            // Định dạng số theo định dạng số chấm động có dấu phẩy phân cách hàng nghìn
+                                            String formattedYearlyRevenue = decimalFormat.format(yearlyRevenue);
+                                            // Hiển thị kết quả trong thẻ <p>
+                                            out.print(formattedYearlyRevenue);
+                                        %>
+                                    </p>
+                                </div>
+                                <i class="fa fa-dollar"></i>
                             </div>
-                            <i class="fa fa-dollar"></i>
                         </div>
                     </div>
                 </div>
-            </div>
-                
-                
-                <div id="manageproduct" class="manageproduct">
-
-
+                                    <div id="manageproduct" class="manageproduct" style="width: 1300px">
                     <h2>Delivered Order data</h2>
-
-
-
                     <table id="example">
-                        <thead>
+                        <thead style="font-size: 1.25rem">
                             <tr>
                                 <th class="align-middle">Order ID</th>
                                 <th class="align-middle">Account</th>
                                 <th class="align-middle">Address</th>
                                 <th class="align-middle">Phone</th>
-
-                                <th class="align-middle">Total</th>
+                                <th style="width: 130px" class="align-middle">Total</th>
                                 <th class="align-middle">Purchase Method</th>
                                 <th class="align-middle">Purchase Date</th>
                                 <th class="align-middle">Status</th>
@@ -462,34 +438,30 @@
 
                             %>
                             <tr>
-                                <td class="align-middle"><p><%= i.getOrderID()%></p></td>
-                                <td class="align-middle"><p><%= a.getAccountName()%></p></td>
-                                <td class="align-middle"><p><%= i.getOrderAddress()%></p></td>
-                                <td class="align-middle"><p><%= a.getAccountPhone()%></p></td>
-
-                                <td class="align-middle">
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= i.getOrderID()%></p></td>
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= a.getAccountName()%></p></td>
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= i.getOrderAddress()%></p></td>
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= a.getAccountPhone()%></p></td>
+                                <td style="font-size: 1.25rem;"class="align-middle">
                                     <p>
                                         <fmt:formatNumber
                                         value="<%= i.getTotalPrice()%>"
                                             type="number"
-                                            pattern="###,### vnđ"
+                                            pattern="###,### VNÐ"
                                             />
                                     </p>
                                 </td>
-                                <td class="align-middle"><p><%= i.getPaymentMethod()%></p></td>
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= i.getPaymentMethod()%></p></td>
                                         <%
                                             for (OrderStatusLog osl : osll) {
                                                 if (osl.getOrderStatus().equals("Processing")) {
-
-
                                         %>
-                                <td class="align-middle"><p><%= osl.getStatusDate()%></p></td>
-
-                                <%
-                                        }
-                                    }
-                                %>
-                                <td>
+                                <td style="font-size: 1.25rem;"class="align-middle"><p><%= osl.getStatusDate()%></p></td>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                <td style="font-size: 1.25rem;">
                                     <%
                                         if (("Processing").equalsIgnoreCase(i.getOrderStatus())) {
                                     %>
@@ -545,7 +517,7 @@
                                                                     <fmt:formatNumber
                                                                     value="<%= j.getTotal()%>"
                                                                         type="number"
-                                                                        pattern="###,### vnđ"
+                                                                        pattern="###,### VNÐ"
                                                                         /></td>
                                                             </tr>
                                                             <%
@@ -556,14 +528,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     <form action="" method="post">
                                                         <input type="hidden" name="orderID" value="<%= i.getOrderID()%>">
                                                         <input type="hidden" name="userID" value="<%= i.getAccountID()%>">
                                                         <input type="hidden" name="staffID" value="<%= temp.getAccountID()%>">
-
-
                                                         <%
                                                             if (("Processing").equalsIgnoreCase(i.getOrderStatus())) {
                                                         %>
@@ -573,15 +542,11 @@
                                                         <button type="submit" name="Deliver" class="btn btn-primary" value="deliver">Delivered</button>
                                                         <button type="submit" name="Cancel" class="btn btn-danger" value="cancel">Cancel</button>
                                                         <%}%>
-
-
-
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Status Log Modal -->
                                     <div class="modal fade" id="StatusLog<%= i.getOrderID()%>">" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -598,21 +563,17 @@
                                                                 <th>Date</th>
                                                                 <th>Staff ID</th>
                                                                 <th>Staff Name</th>
-
                                                             </tr>
                                                             <%
 
                                                                 List<OrderStatusLog> osll2 = osldao.getAllOrderStatusLogByOrderId(i.getOrderID());
 
                                                                 for (OrderStatusLog osl : osll2) {
-
-
                                                             %>
                                                             <tr>
                                                                 <td><%= osl.getOrderStatus()%></td>
                                                                 <td><%= osl.getStatusDate()%></td>
                                                                 <%
-
                                                                     if (osl.getAcccountID() != 0) {
                                                                         Account staff = adao2.GetAccountById(Integer.toString(osl.getAcccountID()));
 
@@ -620,15 +581,12 @@
                                                                 <td><%= osl.getAcccountID()%></td>
                                                                 <td><%= staff.getAccountName()%></td>
                                                                 <%
-
                                                                 } else {
                                                                 %>
-
                                                                 <td>-</td>
                                                                 <td>-</td>
                                                                 <%
                                                                     }
-
                                                                 %>
                                                             </tr>
                                                             <%                                                                }
@@ -643,15 +601,9 @@
                                                         <input type="hidden" name="orderID" value="<%= i.getOrderID()%>">
                                                         <input type="hidden" name="userID" value="<%= i.getAccountID()%>">
 
-
-
                                                         <!--                                                        <button type="submit" name="Confirm" class="btn btn-primary" value="confirm">Confirmed</button>
-                                                                                                                <button type="submit" name="Cancel" class="btn btn-danger" value="cancel">Cancel</button>
-                                                                              
+                                                                                                                <button type="submit" name="Cancel" class="btn btn-danger" value="cancel">Cancel</button>             
                                                         -->
-
-
-
                                                     </form>
                                                 </div>
                                             </div>
@@ -659,8 +611,6 @@
                                     </div>
                                 </td>
                             </tr>
-
-
                             <%
 
                                 }
