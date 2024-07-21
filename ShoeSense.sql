@@ -150,8 +150,9 @@ VALUES
 
 INSERT INTO [Order]
 VALUES 
-	(1,  'VietNam', 'Cash', 100.00, 'Processing'),
-		(1,  'VietNam', 'Cash', 100000.00, 'Delivered');
+	(1,  'VietNam', 'Cash', 1000.00, 'Processing'),
+		(1,  'VietNam', 'Cash', 1000.00, 'Shipping'),
+		(1,  'VietNam', 'Cash', 1000.00, 'Delivered');
 	
 
 
@@ -159,16 +160,47 @@ VALUES
 INSERT INTO OrderStatusLog
 VALUES 
 	(1, null,GETDATE(), 'Processing'),
+
 	(2, null,GETDATE(), 'Processing'),
-	(2, 5,GETDATE(), 'Delivered');
+	(2, 5,GETDATE(), 'Shipping'),
+
+	(3, null,GETDATE(), 'Processing'),
+	(3, 5,GETDATE(), 'Shipping'),
+	(3, 5,GETDATE(), 'Delivered');
 
 
 
 
 INSERT INTO [OrderDetail]
 VALUES 
-	(1,1, 1, 1, 1000.00);
+	(1,1, 1, 1, 1000.00),
+	(2,1, 1, 1, 1000.00),
+	(3,1, 1, 1, 1000.00);
 
-	INSERT INTO Comment
+INSERT INTO Comment
 VALUES 
 	(1,1, 'Cool Product', GETDATE(), 'Public');
+
+
+	create table Import(
+importID int primary key IDENTITY(1,1) not null,
+importDate datetime,
+accountID int foreign key references Account(accountID) not null,
+productID int foreign key references Product(productID) not null,
+variantID int foreign key references ProductVariant(variantID) not null,
+quantity int
+);
+
+INSERT INTO Import
+VALUES 
+	(GETDATE(),5, 1, 1, 1),
+	(GETDATE(),5, 1, 1, 2),
+	(GETDATE(),5, 1, 1, 1),
+	(GETDATE(),5, 1, 1, 1),
+	(GETDATE(),5, 1, 1, 1),
+	(GETDATE(),4, 1, 1, 1),
+	(GETDATE(),4, 1, 1, 1),
+	(GETDATE(),4, 1, 1, 1),
+	(GETDATE(),4, 1, 1, 1),
+	(GETDATE(),4, 1, 1, 1);
+
